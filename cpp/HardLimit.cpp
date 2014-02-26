@@ -178,7 +178,8 @@ int HardLimit_i::serviceFunction()
 
     // if no data is available then return NOOP which will sleep briefly and then call process() again
     if (not tmp) { // No data is available
-        return NOOP;
+        delete tmp;
+    	return NOOP;
     }
 
 
@@ -201,5 +202,6 @@ int HardLimit_i::serviceFunction()
      dataDouble_out->pushPacket(tmp->dataBuffer,tmp->T,tmp->EOS,tmp->streamID);
 
     // Since we did work then return NORMAL and thus call process() immediately
-    return NORMAL;
+     delete tmp;
+     return NORMAL;
 }
