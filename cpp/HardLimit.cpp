@@ -178,7 +178,6 @@ int HardLimit_i::serviceFunction()
 
     // if no data is available then return NOOP which will sleep briefly and then call process() again
     if (not tmp) { // No data is available
-        delete tmp;
     	return NOOP;
     }
 
