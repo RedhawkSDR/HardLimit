@@ -118,7 +118,7 @@ class HardLimit_i(HardLimit_base):
         data, T, EOS, streamID, sri, sriChanged, inputQueueFlushed = self.port_dataDouble_in.getPacket()
                 
         if inputQueueFlushed:
-            self._log.warning("input Q flushed - data has been thrown on the floor")
+            self._log.warning("input queue flushed - data has been thrown on the floor")
     
         # If no data is available then return NOOP which will sleep briefly and then call process() again    
         if data == None:

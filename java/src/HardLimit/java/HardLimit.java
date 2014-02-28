@@ -181,7 +181,7 @@ public class HardLimit extends HardLimit_base {
 
         if (data !=null) {
         	if (data.inputQueueFlushed)
-        		logger.warn("input Q flushed - data has been thrown on the floor.");
+        		logger.warn("input queue flushed - data has been thrown on the floor.");
         	if (data.sriChanged() || (!this.hasSri(data.getStreamID()))) {
                 this.port_dataDouble_out.pushSRI(data.getSRI());
             }	

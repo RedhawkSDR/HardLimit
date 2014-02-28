@@ -181,7 +181,7 @@ int HardLimit_i::serviceFunction()
     	return NOOP;
     }
 	if (tmp->inputQueueFlushed)
-		LOG_WARN(HardLimit_i, "input Q flushed - data has been thrown on the floor.");
+		LOG_WARN(HardLimit_i, "input queue flushed - data has been thrown on the floor.");
 
     // Implement the hard limit logic
     for (unsigned int i=0; i<tmp->dataBuffer.size(); i++) {
