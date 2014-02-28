@@ -116,7 +116,10 @@ class HardLimit_i(HardLimit_base):
 
         # Read the input data from the dataDouble_in port """
         data, T, EOS, streamID, sri, sriChanged, inputQueueFlushed = self.port_dataDouble_in.getPacket()
-            
+                
+        if inputQueueFlushed:
+            self._log.warning("input Q flushed - data has been thrown on the floor")
+    
         # If no data is available then return NOOP which will sleep briefly and then call process() again    
         if data == None:
             return NOOP
