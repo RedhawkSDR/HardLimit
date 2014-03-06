@@ -20,6 +20,7 @@ package HardLimit.java;
 import java.util.Arrays;
 import java.util.Properties;
 
+import BULKIO.StreamSRI;
 import bulkio.InDoublePort;
 
 /**
@@ -64,7 +65,13 @@ public class HardLimit extends HardLimit_base {
 
     public boolean hasSri(String streamID)
 	{
-		return Arrays.asList(port_dataDouble_out.activeSRIs()).contains(streamID);
+        StreamSRI[] sriArray = port_dataDouble_out.activeSRIs();
+        for (StreamSRI sri : sriArray) {
+          if (streamID.equals(sri.streamID)) {
+        	  return true; // found match
+          }
+        }
+        return false; // not found	
 	}
     
     /**

@@ -153,7 +153,17 @@ class ComponentTests(ossie.utils.testing.ScaComponentTestCase):
         expectedoutput = [-10.0 for x in xrange(10)]+[float(x) for x in xrange(-10,10)] +[10.0 for x in xrange(10)]
         self.assertEqual(outdata,expectedoutput)
         self.checkSRI(sri)
-
+    
+    def testMultiPush(self):
+        """Test Two pushes
+        """
+        testdata = [float(x) for x in xrange(-20,20)]
+        outdata,sri = self.myTestCase(testdata,10.0,-10.0)
+        expectedoutput = [-10.0 for x in xrange(10)]+[float(x) for x in xrange(-10,10)] +[10.0 for x in xrange(10)]
+        self.assertEqual(outdata,expectedoutput)
+        outdata,sri = self.myTestCase(testdata,10.0,-10.0)
+        self.assertEqual(outdata,expectedoutput)
+        self.checkSRI(sri)
     
 if __name__ == "__main__":
     ossie.utils.testing.main("../HardLimit.spd.xml") # By default tests all implementations
