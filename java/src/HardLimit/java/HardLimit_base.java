@@ -32,8 +32,6 @@ import CF.InvalidObjectReference;
 import org.ossie.component.*;
 import org.ossie.properties.*;
 
-import bulkio.*;
-
 /**
  * This is the component code. This file contains all the access points
  * you need to use to be able to access all input and output ports,
@@ -92,13 +90,15 @@ public abstract class HardLimit_base extends Resource implements Runnable {
     /**
      * @generated
      */
-    public InDoublePort port_dataDouble_in;
+    public bulkio.InDoublePort port_dataDouble_in;
 
     // Uses/outputs
     /**
      * @generated
      */
-    public OutDoublePort port_dataDouble_out;
+    public bulkio.OutDoublePort port_dataDouble_out;
+
+
 
     /**
      * @generated
@@ -110,12 +110,22 @@ public abstract class HardLimit_base extends Resource implements Runnable {
         addProperty(lower_limit);
 
         // Provides/input
-        this.port_dataDouble_in = new InDoublePort("dataDouble_in");
+        this.port_dataDouble_in = new bulkio.InDoublePort("dataDouble_in");
         this.addPort("dataDouble_in", this.port_dataDouble_in);
 
         // Uses/output
-        this.port_dataDouble_out = new OutDoublePort("dataDouble_out");
+        this.port_dataDouble_out = new bulkio.OutDoublePort("dataDouble_out");
         this.addPort("dataDouble_out", this.port_dataDouble_out);
+    }
+
+    public void start() throws CF.ResourcePackage.StartError
+    {
+        super.start();
+    }
+
+    public void stop() throws CF.ResourcePackage.StopError
+    {
+        super.stop();
     }
 
     public void run() 

@@ -31,12 +31,12 @@ if [ "$1" = "rpm" ]; then
         exit 1
     fi
 else
-    for impl in cpp java python ; do
+    for impl in cpp python java ; do
         cd $impl
         if [ -e build.sh ]; then
             ./build.sh $*
         elif [ -e reconf ]; then
-            ./reconf && ./configure && make
+            ./reconf && ./configure && make $*
         else
             echo "No build.sh found for $impl"
         fi

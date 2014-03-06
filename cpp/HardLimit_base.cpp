@@ -63,6 +63,7 @@ void HardLimit_base::start() throw (CORBA::SystemException, CF::Resource::StartE
 {
     boost::mutex::scoped_lock lock(serviceThreadLock);
     if (serviceThread == 0) {
+        dataDouble_in->unblock();
         serviceThread = new ProcessThread<HardLimit_base>(this, 0.1);
         serviceThread->start();
     }
@@ -77,7 +78,7 @@ void HardLimit_base::stop() throw (CORBA::SystemException, CF::Resource::StopErr
     boost::mutex::scoped_lock lock(serviceThreadLock);
     // release the child thread (if it exists)
     if (serviceThread != 0) {
-    	dataDouble_in->block();
+        dataDouble_in->block();
         if (!serviceThread->release(2)) {
             throw CF::Resource::StopError(CF::CF_NOTSET, "Processing thread did not die");
         }
@@ -129,6 +130,7 @@ void HardLimit_base::releaseObject() throw (CORBA::SystemException, CF::LifeCycl
     Resource_impl::releaseObject();
 }
 
+
 void HardLimit_base::loadProperties()
 {
     addProperty(upper_limit,
@@ -150,3 +152,5 @@ void HardLimit_base::loadProperties()
                 "configure");
 
 }
+
+

@@ -51,9 +51,11 @@ class ProcessThread(threading.Thread):
         state = NORMAL
         while (state != FINISH) and (not self.stop_signal.isSet()):
             state = self.target()
+            delay = 1e-6
             if (state == NOOP):
                 # If there was no data to process sleep to avoid spinning
-                time.sleep(self.pause)
+                delay = self.pause
+            time.sleep(delay)
 
 class HardLimit_base(CF__POA.Resource, Resource):
         # These values can be altered in the __init__ of your derived class
@@ -61,13 +63,13 @@ class HardLimit_base(CF__POA.Resource, Resource):
         PAUSE = 0.0125 # The amount of time to sleep if process return NOOP
         TIMEOUT = 5.0 # The amount of time to wait for the process thread to die when stop() is called
         DEFAULT_QUEUE_SIZE = 100 # The number of BulkIO packets that can be in the queue before pushPacket will block
-        
+
         def __init__(self, identifier, execparams):
             loggerName = (execparams['NAME_BINDING'].replace('/', '.')).rsplit("_", 1)[0]
             Resource.__init__(self, identifier, execparams, loggerName=loggerName)
             self.threadControlLock = threading.RLock()
             self.process_thread = None
-            # self.auto_start is deprecated and is only kept for API compatability
+            # self.auto_start is deprecated and is only kept for API compatibility
             # with 1.7.X and 1.8.0 components.  This variable may be removed
             # in future releases
             self.auto_start = False
@@ -88,6 +90,7 @@ class HardLimit_base(CF__POA.Resource, Resource):
                     self.process_thread.start()
             finally:
                 self.threadControlLock.release()
+
 
         def process(self):
             """The process method should process a single "chunk" of data and then return.  This method will be called
