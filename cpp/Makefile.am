@@ -42,5 +42,5 @@ distclean-local:
 include $(srcdir)/Makefile.am.ide
 HardLimit_SOURCES = $(redhawk_SOURCES_auto)
 HardLimit_CXXFLAGS = -Wall $(PROJECTDEPS_CFLAGS) $(BOOST_CPPFLAGS) $(INTERFACEDEPS_CFLAGS) $(redhawk_INCLUDES_auto)
-HardLimit_LDADD = $(PROJECTDEPS_LIBS) $(BOOST_LDFLAGS) $(BOOST_THREAD_LIB) $(INTERFACEDEPS_LIBS) $(redhawk_LDADD_auto)
+HardLimit_LDADD = $(PROJECTDEPS_LIBS) $(BOOST_LDFLAGS) $(BOOST_THREAD_LIB) $(BOOST_SYSTEM_LIB) $(INTERFACEDEPS_LIBS) $(redhawk_LDADD_auto)
 HardLimit_LDFLAGS = -Wall $(redhawk_LDFLAGS_auto)
