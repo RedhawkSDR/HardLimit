@@ -41,18 +41,11 @@ import org.ossie.properties.*;
  *
  * @generated
  */
-public abstract class HardLimit_base extends Resource implements Runnable {
+public abstract class HardLimit_base extends ThreadedResource {
     /**
      * @generated
      */
     public final static Logger logger = Logger.getLogger(HardLimit_base.class.getName());
-
-    /**
-     * Return values for service function.
-     */
-    public final static int FINISH = -1;
-    public final static int NOOP   = 0;
-    public final static int NORMAL = 1;
 
     /**
      * The property upper_limit
@@ -69,7 +62,7 @@ public abstract class HardLimit_base extends Resource implements Runnable {
             Action.EXTERNAL, //action
             new Kind[] {Kind.CONFIGURE} //kind
             );
-
+    
     /**
      * The property lower_limit
      * Sets the lower limit threshold
@@ -85,7 +78,7 @@ public abstract class HardLimit_base extends Resource implements Runnable {
             Action.EXTERNAL, //action
             new Kind[] {Kind.CONFIGURE} //kind
             );
-
+    
     // Provides/inputs
     /**
      * @generated
@@ -98,22 +91,22 @@ public abstract class HardLimit_base extends Resource implements Runnable {
      */
     public bulkio.OutDoublePort port_dataDouble_out;
 
-
-
     /**
      * @generated
      */
     public HardLimit_base()
     {
         super();
+
+        // Properties
         addProperty(upper_limit);
         addProperty(lower_limit);
 
-        // Provides/input
+        // Provides/inputs
         this.port_dataDouble_in = new bulkio.InDoublePort("dataDouble_in");
         this.addPort("dataDouble_in", this.port_dataDouble_in);
 
-        // Uses/output
+        // Uses/outputs
         this.port_dataDouble_out = new bulkio.OutDoublePort("dataDouble_out");
         this.addPort("dataDouble_out", this.port_dataDouble_out);
     }
@@ -127,25 +120,6 @@ public abstract class HardLimit_base extends Resource implements Runnable {
     {
         super.stop();
     }
-
-    public void run() 
-    {
-        while(this.started())
-        {
-            int state = this.serviceFunction();
-            if (state == NOOP) {
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    break;
-                }
-            } else if (state == FINISH) {
-                return;
-            }
-        }
-    }
-
-    protected abstract int serviceFunction();
 
     /**
      * The main function of your component.  If no args are provided, then the
@@ -161,7 +135,7 @@ public abstract class HardLimit_base extends Resource implements Runnable {
         HardLimit.configureOrb(orbProps);
 
         try {
-            Resource.start_component(HardLimit.class, args, orbProps);
+            ThreadedResource.start_component(HardLimit.class, args, orbProps);
         } catch (InvalidObjectReference e) {
             e.printStackTrace();
         } catch (NotFound e) {

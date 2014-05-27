@@ -30,85 +30,40 @@
 
 HardLimit_base::HardLimit_base(const char *uuid, const char *label) :
     Resource_impl(uuid, label),
-    serviceThread(0)
+    ThreadedComponent()
 {
-    construct();
+    loadProperties();
+
+    dataDouble_in = new bulkio::InDoublePort("dataDouble_in");
+    addPort("dataDouble_in", dataDouble_in);
+    dataDouble_out = new bulkio::OutDoublePort("dataDouble_out");
+    addPort("dataDouble_out", dataDouble_out);
 }
 
-void HardLimit_base::construct()
+HardLimit_base::~HardLimit_base()
 {
-    Resource_impl::_started = false;
-    loadProperties();
-    serviceThread = 0;
-    
-    PortableServer::ObjectId_var oid;
-    dataDouble_in = new bulkio::InDoublePort("dataDouble_in");
-    oid = ossie::corba::RootPOA()->activate_object(dataDouble_in);
-    dataDouble_out = new bulkio::OutDoublePort("dataDouble_out");
-    oid = ossie::corba::RootPOA()->activate_object(dataDouble_out);
-
-    registerInPort(dataDouble_in);
-    registerOutPort(dataDouble_out, dataDouble_out->_this());
+    delete dataDouble_in;
+    dataDouble_in = 0;
+    delete dataDouble_out;
+    dataDouble_out = 0;
 }
 
 /*******************************************************************************************
     Framework-level functions
     These functions are generally called by the framework to perform housekeeping.
 *******************************************************************************************/
-void HardLimit_base::initialize() throw (CF::LifeCycle::InitializeError, CORBA::SystemException)
-{
-}
-
 void HardLimit_base::start() throw (CORBA::SystemException, CF::Resource::StartError)
 {
-    boost::mutex::scoped_lock lock(serviceThreadLock);
-    if (serviceThread == 0) {
-        dataDouble_in->unblock();
-        serviceThread = new ProcessThread<HardLimit_base>(this, 0.1);
-        serviceThread->start();
-    }
-    
-    if (!Resource_impl::started()) {
-    	Resource_impl::start();
-    }
+    Resource_impl::start();
+    ThreadedComponent::startThread();
 }
 
 void HardLimit_base::stop() throw (CORBA::SystemException, CF::Resource::StopError)
 {
-    boost::mutex::scoped_lock lock(serviceThreadLock);
-    // release the child thread (if it exists)
-    if (serviceThread != 0) {
-        dataDouble_in->block();
-        if (!serviceThread->release(2)) {
-            throw CF::Resource::StopError(CF::CF_NOTSET, "Processing thread did not die");
-        }
-        serviceThread = 0;
+    Resource_impl::stop();
+    if (!ThreadedComponent::stopThread()) {
+        throw CF::Resource::StopError(CF::CF_NOTSET, "Processing thread did not die");
     }
-    
-    if (Resource_impl::started()) {
-    	Resource_impl::stop();
-    }
-}
-
-CORBA::Object_ptr HardLimit_base::getPort(const char* _id) throw (CORBA::SystemException, CF::PortSupplier::UnknownPort)
-{
-
-    std::map<std::string, Port_Provides_base_impl *>::iterator p_in = inPorts.find(std::string(_id));
-    if (p_in != inPorts.end()) {
-        if (!strcmp(_id,"dataDouble_in")) {
-            bulkio::InDoublePort *ptr = dynamic_cast<bulkio::InDoublePort *>(p_in->second);
-            if (ptr) {
-                return ptr->_this();
-            }
-        }
-    }
-
-    std::map<std::string, CF::Port_var>::iterator p_out = outPorts_var.find(std::string(_id));
-    if (p_out != outPorts_var.end()) {
-        return CF::Port::_duplicate(p_out->second);
-    }
-
-    throw (CF::PortSupplier::UnknownPort());
 }
 
 void HardLimit_base::releaseObject() throw (CORBA::SystemException, CF::LifeCycle::ReleaseError)
@@ -120,16 +75,8 @@ void HardLimit_base::releaseObject() throw (CORBA::SystemException, CF::LifeCycl
         // TODO - this should probably be logged instead of ignored
     }
 
-    // deactivate ports
-    releaseInPorts();
-    releaseOutPorts();
-
-    delete(dataDouble_in);
-    delete(dataDouble_out);
-
     Resource_impl::releaseObject();
 }
-
 
 void HardLimit_base::loadProperties()
 {
