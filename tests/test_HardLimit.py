@@ -96,20 +96,7 @@ class ComponentTests(ossie.utils.testing.ScaComponentTestCase):
         kw = sb.SRIKeyword("testkw", 10.0,'double')
         # Push in data
         self.src1.push(data,EOS=False, streamID='myStreamID', sampleRate=200, complexData=False, SRIKeywords=[kw], loop=None)
-
-        #data processing is asynchronos - so wait until the data is all processed
-        count=0
-        while True:
-            out =  self.sink.getData()
-            sri = self.sink.sri()
-            if out:
-                break
-            if count==100:
-                break
-            time.sleep(.01)
-            count+=1        
-      
-        return out,sri
+        return self.waitForData()
 
     def checkSRI(self,sri):
         self.assertEqual(sri.streamID,"myStreamID")
@@ -119,7 +106,39 @@ class ComponentTests(ossie.utils.testing.ScaComponentTestCase):
         self.assertEqual(len(sri.keywords), 1)
         self.assertAlmostEqual(any.from_any(sri.keywords[0].value), 10.0)
 
-    def testA(self):
+    def waitForData(self):
+        count=0
+        out=[]
+        while True:
+            out =  self.sink.getData()
+            sri = self.sink.sri()
+            if out:
+                break
+            if count==100:
+                break
+            time.sleep(.01)
+            count+=1        
+        return out, sri
+
+    def testNoConfigure(self):
+        """Test Component works without initial configuration call 
+        """
+        data = [1.0, 1.0, 1.0, 1.0]
+        self.src1.push(data, streamID='myStreamID', sampleRate=200, complexData=False, loop=None)
+        output,sri = self.waitForData()
+        self.assertEqual(data, output)
+
+    def testAddingRemovingConnections(self):
+        """Test Component still works when disconnected/reconnected
+        """
+        self.comp.disconnect(self.sink)
+        data = [1.0, 1.0, 1.0, 1.0]
+        self.src1.push(data, streamID='myStreamID', sampleRate=200, complexData=False, loop=None)
+        self.comp.connect(self.sink,'doubleIn')
+        output,sri  = self.waitForData()
+        self.assertEqual(data, output)
+    
+    def testNoChangeInData(self):
         """Test No Change in Data 
         """
         testdata = [float(x) for x in xrange(5)]
@@ -127,7 +146,7 @@ class ComponentTests(ossie.utils.testing.ScaComponentTestCase):
         self.assertEqual(outdata,testdata)
         self.checkSRI(sri)
 
-    def testB(self):
+    def testUpperLimit(self):
         """Test Upper Limit 
         """
         testdata = [float(x) for x in xrange(20)]
@@ -136,7 +155,7 @@ class ComponentTests(ossie.utils.testing.ScaComponentTestCase):
         self.assertEqual(outdata,expectedoutput)
         self.checkSRI(sri)
 
-    def testC(self):
+    def testLowerLimit(self):
         """Test Lower Limit 
         """
         testdata = [float(x) for x in xrange(-20,0)]
@@ -145,7 +164,7 @@ class ComponentTests(ossie.utils.testing.ScaComponentTestCase):
         self.assertEqual(outdata,expectedoutput)
         self.checkSRI(sri)
     
-    def testD(self):
+    def testUpperAndLowerLimit(self):
         """Test Upper and Lower Limit 
         """
         testdata = [float(x) for x in xrange(-20,20)]
