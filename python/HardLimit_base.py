@@ -49,8 +49,8 @@ class HardLimit_base(CF__POA.Resource, Resource, ThreadedComponent):
             # in future releases
             self.auto_start = False
             # Instantiate the default implementations for all ports on this component
-            self.port_dataDouble_in = bulkio.InDoublePort("dataDouble_in", maxsize=self.DEFAULT_QUEUE_SIZE)
-            self.port_dataDouble_out = bulkio.OutDoublePort("dataDouble_out")
+            self.port_dataFloat_in = bulkio.InFloatPort("dataFloat_in", maxsize=self.DEFAULT_QUEUE_SIZE)
+            self.port_dataFloat_out = bulkio.OutFloatPort("dataFloat_out")
 
         def start(self):
             Resource.start(self)
@@ -74,13 +74,13 @@ class HardLimit_base(CF__POA.Resource, Resource, ThreadedComponent):
         # DO NOT ADD NEW PORTS HERE.  You can add ports in your derived class, in the SCD xml file, 
         # or via the IDE.
 
-        port_dataDouble_in = providesport(name="dataDouble_in",
-                                          repid="IDL:BULKIO/dataDouble:1.0",
-                                          type_="data")
+        port_dataFloat_in = providesport(name="dataFloat_in",
+                                         repid="IDL:BULKIO/dataFloat:1.0",
+                                         type_="data")
 
-        port_dataDouble_out = usesport(name="dataDouble_out",
-                                       repid="IDL:BULKIO/dataDouble:1.0",
-                                       type_="data")
+        port_dataFloat_out = usesport(name="dataFloat_out",
+                                      repid="IDL:BULKIO/dataFloat:1.0",
+                                      type_="data")
 
         ######################################################################
         # PROPERTIES
@@ -88,7 +88,7 @@ class HardLimit_base(CF__POA.Resource, Resource, ThreadedComponent):
         # DO NOT ADD NEW PROPERTIES HERE.  You can add properties in your derived class, in the PRF xml file
         # or by using the IDE.
         upper_limit = simple_property(id_="upper_limit",
-                                      type_="double",
+                                      type_="float",
                                       defvalue=1.0,
                                       mode="readwrite",
                                       action="external",
@@ -96,7 +96,7 @@ class HardLimit_base(CF__POA.Resource, Resource, ThreadedComponent):
                                       description="""Sets the upper limit threshold""")
         
         lower_limit = simple_property(id_="lower_limit",
-                                      type_="double",
+                                      type_="float",
                                       defvalue=-1.0,
                                       mode="readwrite",
                                       action="external",

@@ -17,11 +17,10 @@
  */
 package HardLimit.java;
 
-import java.util.Arrays;
 import java.util.Properties;
 
 import BULKIO.StreamSRI;
-import bulkio.InDoublePort;
+import bulkio.InFloatPort;
 
 /**
  * This is the component code. This file contains the derived class where custom
@@ -65,7 +64,7 @@ public class HardLimit extends HardLimit_base {
 
     public boolean hasSri(String streamID)
 	{
-        StreamSRI[] sriArray = port_dataDouble_out.activeSRIs();
+        StreamSRI[] sriArray = port_dataFloat_out.activeSRIs();
         for (StreamSRI sri : sriArray) {
           if (streamID.equals(sri.streamID)) {
         	  return true; // found match
@@ -184,13 +183,13 @@ public class HardLimit extends HardLimit_base {
      *
      */
     protected int serviceFunction() {
-    	InDoublePort.Packet data = this.port_dataDouble_in.getPacket(-1);
+    	InFloatPort.Packet data = this.port_dataFloat_in.getPacket(-1);
 
         if (data !=null) {
         	if (data.inputQueueFlushed)
         		logger.warn("input queue flushed - data has been thrown on the floor.");
         	if (data.sriChanged() || (!this.hasSri(data.getStreamID()))) {
-                this.port_dataDouble_out.pushSRI(data.getSRI());
+                this.port_dataFloat_out.pushSRI(data.getSRI());
             }	
         	
         	for (int i =0; i<data.getData().length; i++) {
@@ -202,7 +201,7 @@ public class HardLimit extends HardLimit_base {
         		}
         		
         	}
-        	this.port_dataDouble_out.pushPacket(data.getData(), data.getTime(), data.getEndOfStream(), data.getStreamID());    	
+        	this.port_dataFloat_out.pushPacket(data.getData(), data.getTime(), data.getEndOfStream(), data.getStreamID());
         return NORMAL;
         }
         else

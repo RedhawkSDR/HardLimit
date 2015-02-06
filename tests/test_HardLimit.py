@@ -34,7 +34,7 @@ class ComponentTests(ossie.utils.testing.ScaComponentTestCase):
         """Set up the unit test - this is run before every method that starts with test
         """
         ossie.utils.testing.ScaComponentTestCase.setUp(self)
-        self.src1 = sb.DataSource(dataFormat="double")
+        self.src1 = sb.DataSource(dataFormat="float")
         self.sink = sb.DataSink()
         
         
@@ -45,8 +45,8 @@ class ComponentTests(ossie.utils.testing.ScaComponentTestCase):
         self.sink.start()
         
         #do the connections        
-        self.src1.connect(self.comp,'dataDouble_in')
-        self.comp.connect(self.sink,'doubleIn')
+        self.src1.connect(self.comp,'dataFloat_in')
+        self.comp.connect(self.sink,'floatIn')
         
     def tearDown(self):
         """Finish the unit test - this is run after every method that starts with test
@@ -134,7 +134,7 @@ class ComponentTests(ossie.utils.testing.ScaComponentTestCase):
         self.comp.disconnect(self.sink)
         data = [1.0, 1.0, 1.0, 1.0]
         self.src1.push(data, streamID='myStreamID', sampleRate=200, complexData=False, loop=None)
-        self.comp.connect(self.sink,'doubleIn')
+        self.comp.connect(self.sink,'floatIn')
         output,sri  = self.waitForData()
         self.assertEqual(data, output)
     

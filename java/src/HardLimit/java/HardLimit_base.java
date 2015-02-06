@@ -53,11 +53,11 @@ public abstract class HardLimit_base extends ThreadedResource {
      *
      * @generated
      */
-    public final DoubleProperty upper_limit =
-        new DoubleProperty(
+    public final FloatProperty upper_limit =
+        new FloatProperty(
             "upper_limit", //id
             null, //name
-            1.0, //default value
+            1.0F, //default value
             Mode.READWRITE, //mode
             Action.EXTERNAL, //action
             new Kind[] {Kind.CONFIGURE} //kind
@@ -69,11 +69,11 @@ public abstract class HardLimit_base extends ThreadedResource {
      *
      * @generated
      */
-    public final DoubleProperty lower_limit =
-        new DoubleProperty(
+    public final FloatProperty lower_limit =
+        new FloatProperty(
             "lower_limit", //id
             null, //name
-            -1.0, //default value
+            -1.0F, //default value
             Mode.READWRITE, //mode
             Action.EXTERNAL, //action
             new Kind[] {Kind.CONFIGURE} //kind
@@ -83,13 +83,13 @@ public abstract class HardLimit_base extends ThreadedResource {
     /**
      * @generated
      */
-    public bulkio.InDoublePort port_dataDouble_in;
+    public bulkio.InFloatPort port_dataFloat_in;
 
     // Uses/outputs
     /**
      * @generated
      */
-    public bulkio.OutDoublePort port_dataDouble_out;
+    public bulkio.OutFloatPort port_dataFloat_out;
 
     /**
      * @generated
@@ -100,15 +100,17 @@ public abstract class HardLimit_base extends ThreadedResource {
 
         // Properties
         addProperty(upper_limit);
+
         addProperty(lower_limit);
 
+
         // Provides/inputs
-        this.port_dataDouble_in = new bulkio.InDoublePort("dataDouble_in");
-        this.addPort("dataDouble_in", this.port_dataDouble_in);
+        this.port_dataFloat_in = new bulkio.InFloatPort("dataFloat_in");
+        this.addPort("dataFloat_in", this.port_dataFloat_in);
 
         // Uses/outputs
-        this.port_dataDouble_out = new bulkio.OutDoublePort("dataDouble_out");
-        this.addPort("dataDouble_out", this.port_dataDouble_out);
+        this.port_dataFloat_out = new bulkio.OutFloatPort("dataFloat_out");
+        this.addPort("dataFloat_out", this.port_dataFloat_out);
     }
 
     public void start() throws CF.ResourcePackage.StartError

@@ -34,18 +34,18 @@ HardLimit_base::HardLimit_base(const char *uuid, const char *label) :
 {
     loadProperties();
 
-    dataDouble_in = new bulkio::InDoublePort("dataDouble_in");
-    addPort("dataDouble_in", dataDouble_in);
-    dataDouble_out = new bulkio::OutDoublePort("dataDouble_out");
-    addPort("dataDouble_out", dataDouble_out);
+    dataFloat_in = new bulkio::InFloatPort("dataFloat_in");
+    addPort("dataFloat_in", dataFloat_in);
+    dataFloat_out = new bulkio::OutFloatPort("dataFloat_out");
+    addPort("dataFloat_out", dataFloat_out);
 }
 
 HardLimit_base::~HardLimit_base()
 {
-    delete dataDouble_in;
-    dataDouble_in = 0;
-    delete dataDouble_out;
-    dataDouble_out = 0;
+    delete dataFloat_in;
+    dataFloat_in = 0;
+    delete dataFloat_out;
+    dataFloat_out = 0;
 }
 
 /*******************************************************************************************

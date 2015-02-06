@@ -174,7 +174,7 @@ int HardLimit_i::serviceFunction()
     LOG_DEBUG(HardLimit_i, "serviceFunction() example log message");
     
     // Get data from input port.  -1 means non-blocking, return immediately if no data
-    bulkio::InDoublePort::dataTransfer *tmp = dataDouble_in->getPacket(-1);
+    bulkio::InFloatPort::dataTransfer *tmp = dataFloat_in->getPacket(-1);
 
     // if no data is available then return NOOP which will sleep briefly and then call process() again
     if (not tmp) { // No data is available
@@ -194,12 +194,12 @@ int HardLimit_i::serviceFunction()
         }
 
      //Output sri equals the input sri for this component.  If anything is updated, then push that update out.
-    if (tmp->sriChanged || (dataDouble_out->getCurrentSRI().count(tmp->streamID)==0)) {
-    	 dataDouble_out->pushSRI(tmp->SRI);
-     }
+    if (tmp->sriChanged || (dataFloat_out->getCurrentSRI().count(tmp->streamID)==0)) {
+    	dataFloat_out->pushSRI(tmp->SRI);
+    }
 
      // Push the modified data out along with the T, EOS, and streamID we received in the input
-     dataDouble_out->pushPacket(tmp->dataBuffer,tmp->T,tmp->EOS,tmp->streamID);
+     dataFloat_out->pushPacket(tmp->dataBuffer,tmp->T,tmp->EOS,tmp->streamID);
 
     // Since we did work then return NORMAL and thus call process() immediately
      delete tmp;

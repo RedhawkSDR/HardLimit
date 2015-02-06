@@ -40,12 +40,12 @@ class HardLimit_base : public Resource_impl, protected ThreadedComponent
 
     protected:
         // Member variables exposed as properties
-        double upper_limit;
-        double lower_limit;
+        float upper_limit;
+        float lower_limit;
 
         // Ports
-        bulkio::InDoublePort *dataDouble_in;
-        bulkio::OutDoublePort *dataDouble_out;
+        bulkio::InFloatPort *dataFloat_in;
+        bulkio::OutFloatPort *dataFloat_out;
 
     private:
 };

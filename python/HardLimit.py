@@ -114,8 +114,8 @@ class HardLimit_i(HardLimit_base):
             
         """
 
-        # Read the input data from the dataDouble_in port """
-        data, T, EOS, streamID, sri, sriChanged, inputQueueFlushed = self.port_dataDouble_in.getPacket()
+        # Read the input data from the dataFloat_in port """
+        data, T, EOS, streamID, sri, sriChanged, inputQueueFlushed = self.port_dataFloat_in.getPacket()
                 
         if inputQueueFlushed:
             self._log.warning("input queue flushed - data has been thrown on the floor")
@@ -125,8 +125,8 @@ class HardLimit_i(HardLimit_base):
             return NOOP
         
         # Output sri equals the input sri for this component.  If anything is updated, then push that update out.  
-        if sriChanged or not self.port_dataDouble_out.sriDict.has_key(streamID):
-            self.port_dataDouble_out.pushSRI(sri);
+        if sriChanged or not self.port_dataFloat_out.sriDict.has_key(streamID):
+            self.port_dataFloat_out.pushSRI(sri);
 
         # Implement the hard limit logic
         for i, val in enumerate(data):
@@ -137,7 +137,7 @@ class HardLimit_i(HardLimit_base):
                 data[i] = self.lower_limit
         
         # Push the modified data out along with the T, EOS, and streamID we received in the input        
-        self.port_dataDouble_out.pushPacket(data, T, EOS, streamID)
+        self.port_dataFloat_out.pushPacket(data, T, EOS, streamID)
         
         # Since we did work then return NORMAL and thus call process() immediately  
         return NORMAL
