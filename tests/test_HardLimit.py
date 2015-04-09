@@ -134,6 +134,7 @@ class ComponentTests(ossie.utils.testing.ScaComponentTestCase):
         self.comp.disconnect(self.sink)
         data = [1.0, 1.0, 1.0, 1.0]
         self.src1.push(data, streamID='myStreamID', sampleRate=200, complexData=False, loop=None)
+	time.sleep(1.0)
         self.comp.connect(self.sink,'floatIn')
         output,sri  = self.waitForData()
         self.assertEqual(data, output)
