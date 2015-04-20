@@ -29,7 +29,7 @@
 ******************************************************************************************/
 
 HardLimit_base::HardLimit_base(const char *uuid, const char *label) :
-    Resource_impl(uuid, label),
+    Component(uuid, label),
     ThreadedComponent()
 {
     loadProperties();
@@ -54,13 +54,13 @@ HardLimit_base::~HardLimit_base()
 *******************************************************************************************/
 void HardLimit_base::start() throw (CORBA::SystemException, CF::Resource::StartError)
 {
-    Resource_impl::start();
+    Component::start();
     ThreadedComponent::startThread();
 }
 
 void HardLimit_base::stop() throw (CORBA::SystemException, CF::Resource::StopError)
 {
-    Resource_impl::stop();
+    Component::stop();
     if (!ThreadedComponent::stopThread()) {
         throw CF::Resource::StopError(CF::CF_NOTSET, "Processing thread did not die");
     }
@@ -75,24 +75,15 @@ void HardLimit_base::releaseObject() throw (CORBA::SystemException, CF::LifeCycl
         // TODO - this should probably be logged instead of ignored
     }
 
-    Resource_impl::releaseObject();
+    Component::releaseObject();
 }
 
 void HardLimit_base::loadProperties()
 {
-    addProperty(upper_limit,
-                1,
-                "upper_limit",
-                "",
-                "readwrite",
-                "",
-                "external",
-                "configure");
-
-    addProperty(lower_limit,
-                -1,
-                "lower_limit",
-                "",
+    addProperty(Limits,
+                Limits_struct(),
+                "Limits",
+                "Limits",
                 "readwrite",
                 "",
                 "external",

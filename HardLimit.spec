@@ -37,12 +37,17 @@ License:        LGPLv3+
 Source0:        %{name}-%{version}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
-BuildRequires:  redhawk-devel >= 1.10
-Requires:       redhawk >= 1.10
+BuildRequires:  redhawk-devel >= 2.0
+Requires:       redhawk >= 2.0
 
 # Interface requirements
-BuildRequires:  bulkioInterfaces
-Requires:       bulkioInterfaces
+BuildRequires:  bulkioInterfaces >= 2.0
+Requires:       bulkioInterfaces >= 2.0
+
+# Java requirements
+Requires: java >= 1.6
+BuildRequires: java-devel >= 1.6
+
 
 %description
 Component %{name}
@@ -103,11 +108,11 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,redhawk,redhawk,-)
-%dir %{_prefix}/dom/components/%{name}
-%{_prefix}/dom/components/%{name}/HardLimit.scd.xml
-%{_prefix}/dom/components/%{name}/HardLimit.prf.xml
-%{_prefix}/dom/components/%{name}/HardLimit.spd.xml
-%{_prefix}/dom/components/%{name}/cpp
-%{_prefix}/dom/components/%{name}/python
-%{_prefix}/dom/components/%{name}/java
+%dir %{_prefix}/dom/components/HardLimit
+%{_prefix}/dom/components/HardLimit/HardLimit.scd.xml
+%{_prefix}/dom/components/HardLimit/HardLimit.prf.xml
+%{_prefix}/dom/components/HardLimit/HardLimit.spd.xml
+%{_prefix}/dom/components/HardLimit/cpp
+%{_prefix}/dom/components/HardLimit/python
+%{_prefix}/dom/components/HardLimit/java
 

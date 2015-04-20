@@ -15,16 +15,18 @@
  * You should have received a copy of the GNU Lesser General Public License along with this 
  * program.  If not, see http://www.gnu.org/licenses/.
  */
-#ifndef HARDLIMIT_IMPL_BASE_H
-#define HARDLIMIT_IMPL_BASE_H
+
+#ifndef HARDLIMIT_BASE_IMPL_BASE_H
+#define HARDLIMIT_BASE_IMPL_BASE_H
 
 #include <boost/thread.hpp>
-#include <ossie/Resource_impl.h>
+#include <ossie/Component.h>
 #include <ossie/ThreadedComponent.h>
 
 #include <bulkio/bulkio.h>
+#include "struct_props.h"
 
-class HardLimit_base : public Resource_impl, protected ThreadedComponent
+class HardLimit_base : public Component, protected ThreadedComponent
 {
     public:
         HardLimit_base(const char *uuid, const char *label);
@@ -40,8 +42,7 @@ class HardLimit_base : public Resource_impl, protected ThreadedComponent
 
     protected:
         // Member variables exposed as properties
-        float upper_limit;
-        float lower_limit;
+        Limits_struct Limits;
 
         // Ports
         bulkio::InFloatPort *dataFloat_in;
@@ -49,4 +50,4 @@ class HardLimit_base : public Resource_impl, protected ThreadedComponent
 
     private:
 };
-#endif // HARDLIMIT_IMPL_BASE_H
+#endif // HARDLIMIT_BASE_IMPL_BASE_H

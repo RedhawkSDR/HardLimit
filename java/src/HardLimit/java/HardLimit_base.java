@@ -32,6 +32,7 @@ import CF.InvalidObjectReference;
 import org.ossie.component.*;
 import org.ossie.properties.*;
 
+
 /**
  * This is the component code. This file contains all the access points
  * you need to use to be able to access all input and output ports,
@@ -41,41 +42,75 @@ import org.ossie.properties.*;
  *
  * @generated
  */
-public abstract class HardLimit_base extends ThreadedResource {
+
+public abstract class HardLimit_base extends Component {
     /**
      * @generated
      */
     public final static Logger logger = Logger.getLogger(HardLimit_base.class.getName());
 
     /**
-     * The property upper_limit
-     * Sets the upper limit threshold
+     * The property Limits
+     * If the meaning of this property isn't clear, a description should be added.
      *
      * @generated
      */
-    public final FloatProperty upper_limit =
-        new FloatProperty(
-            "upper_limit", //id
-            null, //name
-            1.0F, //default value
-            Mode.READWRITE, //mode
-            Action.EXTERNAL, //action
-            new Kind[] {Kind.CONFIGURE} //kind
-            );
-    
     /**
-     * The property lower_limit
-     * Sets the lower limit threshold
-     *
+     * The structure for property Limits
+     * 
      * @generated
      */
-    public final FloatProperty lower_limit =
-        new FloatProperty(
-            "lower_limit", //id
-            null, //name
-            -1.0F, //default value
+    public static class Limits_struct extends StructDef {
+        public final FloatProperty upper_limit =
+            new FloatProperty(
+                "Limits::upper_limit", //id
+                "upper_limit", //name
+                null, //default value
+                Mode.READWRITE, //mode
+                Action.EXTERNAL, //action
+                new Kind[] {Kind.CONFIGURE}, //kind
+                true
+                );
+        public final FloatProperty lower_limit =
+            new FloatProperty(
+                "Limits::lower_limit", //id
+                "lower_limit", //name
+                null, //default value
+                Mode.READWRITE, //mode
+                Action.EXTERNAL, //action
+                new Kind[] {Kind.CONFIGURE}, //kind
+                true
+                );
+    
+        /**
+         * @generated
+         */
+        public Limits_struct(Float upper_limit, Float lower_limit) {
+            this();
+            this.upper_limit.setValue(upper_limit);
+            this.lower_limit.setValue(lower_limit);
+        }
+    
+        /**
+         * @generated
+         */
+        public Limits_struct() {
+            addElement(this.upper_limit);
+            addElement(this.lower_limit);
+        }
+    
+        public String getId() {
+            return "Limits";
+        }
+    };
+    
+    public final StructProperty<Limits_struct> Limits =
+        new StructProperty<Limits_struct>(
+            "Limits", //id
+            "Limits", //name
+            Limits_struct.class, //type
+            new Limits_struct(), //default value
             Mode.READWRITE, //mode
-            Action.EXTERNAL, //action
             new Kind[] {Kind.CONFIGURE} //kind
             );
     
@@ -99,9 +134,7 @@ public abstract class HardLimit_base extends ThreadedResource {
         super();
 
         // Properties
-        addProperty(upper_limit);
-
-        addProperty(lower_limit);
+        addProperty(Limits);
 
 
         // Provides/inputs
@@ -123,6 +156,7 @@ public abstract class HardLimit_base extends ThreadedResource {
         super.stop();
     }
 
+
     /**
      * The main function of your component.  If no args are provided, then the
      * CORBA object is not bound to an SCA Domain or NamingService and can
@@ -137,7 +171,7 @@ public abstract class HardLimit_base extends ThreadedResource {
         HardLimit.configureOrb(orbProps);
 
         try {
-            ThreadedResource.start_component(HardLimit.class, args, orbProps);
+            Component.start_component(HardLimit.class, args, orbProps);
         } catch (InvalidObjectReference e) {
             e.printStackTrace();
         } catch (NotFound e) {

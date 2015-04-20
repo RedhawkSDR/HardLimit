@@ -20,11 +20,10 @@
 #include "ossie/ossieSupport.h"
 
 #include "HardLimit.h"
-
-
 int main(int argc, char* argv[])
 {
     HardLimit_i* HardLimit_servant;
-    Resource_impl::start_component(HardLimit_servant, argc, argv);
+    Component::start_component(HardLimit_servant, argc, argv);
     return 0;
 }
+

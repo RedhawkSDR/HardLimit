@@ -24,15 +24,17 @@ from ossie.cf import CF
 from ossie.cf import CF__POA
 from ossie.utils import uuid
 
-from ossie.resource import Resource
+from ossie.component import Component
 from ossie.threadedcomponent import *
 from ossie.properties import simple_property
+from ossie.properties import simpleseq_property
+from ossie.properties import struct_property
 
 import Queue, copy, time, threading
 from ossie.resource import usesport, providesport
 import bulkio
 
-class HardLimit_base(CF__POA.Resource, Resource, ThreadedComponent):
+class HardLimit_base(CF__POA.Resource, Component, ThreadedComponent):
         # These values can be altered in the __init__ of your derived class
 
         PAUSE = 0.0125 # The amount of time to sleep if process return NOOP
@@ -41,7 +43,7 @@ class HardLimit_base(CF__POA.Resource, Resource, ThreadedComponent):
 
         def __init__(self, identifier, execparams):
             loggerName = (execparams['NAME_BINDING'].replace('/', '.')).rsplit("_", 1)[0]
-            Resource.__init__(self, identifier, execparams, loggerName=loggerName)
+            Component.__init__(self, identifier, execparams, loggerName=loggerName)
             ThreadedComponent.__init__(self)
 
             # self.auto_start is deprecated and is only kept for API compatibility
@@ -53,20 +55,20 @@ class HardLimit_base(CF__POA.Resource, Resource, ThreadedComponent):
             self.port_dataFloat_out = bulkio.OutFloatPort("dataFloat_out")
 
         def start(self):
-            Resource.start(self)
+            Component.start(self)
             ThreadedComponent.startThread(self, pause=self.PAUSE)
 
         def stop(self):
+            Component.stop(self)
             if not ThreadedComponent.stopThread(self, self.TIMEOUT):
                 raise CF.Resource.StopError(CF.CF_NOTSET, "Processing thread did not die")
-            Resource.stop(self)
 
         def releaseObject(self):
             try:
                 self.stop()
             except Exception:
                 self._log.exception("Error stopping")
-            Resource.releaseObject(self)
+            Component.releaseObject(self)
 
         ######################################################################
         # PORTS
@@ -87,20 +89,48 @@ class HardLimit_base(CF__POA.Resource, Resource, ThreadedComponent):
         # 
         # DO NOT ADD NEW PROPERTIES HERE.  You can add properties in your derived class, in the PRF xml file
         # or by using the IDE.
-        upper_limit = simple_property(id_="upper_limit",
-                                      type_="float",
-                                      defvalue=1.0,
-                                      mode="readwrite",
-                                      action="external",
-                                      kinds=("configure",),
-                                      description="""Sets the upper limit threshold""")
+        class Limits(object):
+            upper_limit = simple_property(
+                                          id_="Limits::upper_limit",
+                                          name="upper_limit",
+                                          type_="float",
+                                          optional=True)
         
-        lower_limit = simple_property(id_="lower_limit",
-                                      type_="float",
-                                      defvalue=-1.0,
-                                      mode="readwrite",
-                                      action="external",
-                                      kinds=("configure",),
-                                      description="""Sets the lower limit threshold""")
+            lower_limit = simple_property(
+                                          id_="Limits::lower_limit",
+                                          name="lower_limit",
+                                          type_="float",
+                                          optional=True)
         
+            def __init__(self, **kw):
+                """Construct an initialized instance of this struct definition"""
+                for attrname, classattr in type(self).__dict__.items():
+                    if type(classattr) == simple_property or type(classattr) == simpleseq_property:
+                        classattr.initialize(self)
+                for k,v in kw.items():
+                    setattr(self,k,v)
+        
+            def __str__(self):
+                """Return a string representation of this structure"""
+                d = {}
+                d["upper_limit"] = self.upper_limit
+                d["lower_limit"] = self.lower_limit
+                return str(d)
+        
+            def getId(self):
+                return "Limits"
+        
+            def isStruct(self):
+                return True
+        
+            def getMembers(self):
+                return [("upper_limit",self.upper_limit),("lower_limit",self.lower_limit)]
+        
+        Limits = struct_property(id_="Limits",
+                                 name="Limits",
+                                 structdef=Limits,
+                                 configurationkind=("configure",),
+                                 mode="readwrite")
+        
+
 
