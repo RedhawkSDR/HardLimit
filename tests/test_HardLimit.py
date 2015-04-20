@@ -35,9 +35,7 @@ class ComponentTests(ossie.utils.testing.ScaComponentTestCase):
         """
         ossie.utils.testing.ScaComponentTestCase.setUp(self)
         self.src1 = sb.DataSource(dataFormat="float")
-        self.sink = sb.DataSink()
-        
-        
+        self.sink = sb.DataSink()        
         
         #start all my components
         self.startComponent()
@@ -91,7 +89,7 @@ class ComponentTests(ossie.utils.testing.ScaComponentTestCase):
         """    
 
         # Configure upper and lower limit
-        self.comp.configure(props_from_dict({'upper_limit':upper_limit,'lower_limit':lower_limit}))
+        self.comp.configure({'Limits':{'Limits::upper_limit':upper_limit,'Limits::lower_limit':lower_limit}})
         
         kw = sb.SRIKeyword("testkw", 10.0,'double')
         # Push in data
@@ -142,7 +140,7 @@ class ComponentTests(ossie.utils.testing.ScaComponentTestCase):
         """Test No Change in Data 
         """
         testdata = [float(x) for x in xrange(5)]
-        outdata,sri = self.myTestCase(testdata,100.0,-100.0)
+        outdata,sri = self.myTestCase(testdata,None,None)
         self.assertEqual(outdata,testdata)
         self.checkSRI(sri)
 
@@ -150,7 +148,7 @@ class ComponentTests(ossie.utils.testing.ScaComponentTestCase):
         """Test Upper Limit 
         """
         testdata = [float(x) for x in xrange(20)]
-        outdata,sri = self.myTestCase(testdata,10.0,-10.0)
+        outdata,sri = self.myTestCase(testdata,10.0,None)
         expectedoutput = [float(x) for x in xrange(10)]+[10.0 for x in xrange(10)]
         self.assertEqual(outdata,expectedoutput)
         self.checkSRI(sri)
@@ -159,7 +157,7 @@ class ComponentTests(ossie.utils.testing.ScaComponentTestCase):
         """Test Lower Limit 
         """
         testdata = [float(x) for x in xrange(-20,0)]
-        outdata,sri = self.myTestCase(testdata,10.0,-10.0)
+        outdata,sri = self.myTestCase(testdata,None,-10.0)
         expectedoutput = [-10.0 for x in xrange(10)]+[float(x) for x in xrange(-10,0)]
         self.assertEqual(outdata,expectedoutput)
         self.checkSRI(sri)
