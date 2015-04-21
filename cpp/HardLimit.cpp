@@ -54,11 +54,11 @@ int HardLimit_i::serviceFunction()
 
     // Implement the hard limit logic
     for (unsigned int i=0; i<tmp->dataBuffer.size(); i++) {
-        if (Limits.upper_limit.isSet() && tmp->dataBuffer[i] > *(Limits.upper_limit))
-        	tmp->dataBuffer[i] = *(Limits.upper_limit);
+        if (limits.upper_limit.isSet() && tmp->dataBuffer[i] > *(limits.upper_limit))
+        	tmp->dataBuffer[i] = *(limits.upper_limit);
 
-        if (Limits.lower_limit.isSet() && tmp->dataBuffer[i] < *(Limits.lower_limit))
-        	tmp->dataBuffer[i] = *(Limits.lower_limit);
+        if (limits.lower_limit.isSet() && tmp->dataBuffer[i] < *(limits.lower_limit))
+        	tmp->dataBuffer[i] = *(limits.lower_limit);
 
         }
 

@@ -89,7 +89,7 @@ class ComponentTests(ossie.utils.testing.ScaComponentTestCase):
         """    
 
         # Configure upper and lower limit
-        self.comp.configure({'Limits':{'Limits::upper_limit':upper_limit,'Limits::lower_limit':lower_limit}})
+        self.comp.configure({'limits':{'limits::upper_limit':upper_limit,'limits::lower_limit':lower_limit}})
         
         kw = sb.SRIKeyword("testkw", 10.0,'double')
         # Push in data

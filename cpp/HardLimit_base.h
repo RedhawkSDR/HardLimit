@@ -42,7 +42,7 @@ class HardLimit_base : public Component, protected ThreadedComponent
 
     protected:
         // Member variables exposed as properties
-        Limits_struct Limits;
+        limits_struct limits;
 
         // Ports
         bulkio::InFloatPort *dataFloat_in;

@@ -80,10 +80,10 @@ void HardLimit_base::releaseObject() throw (CORBA::SystemException, CF::LifeCycl
 
 void HardLimit_base::loadProperties()
 {
-    addProperty(Limits,
-                Limits_struct(),
-                "Limits",
-                "Limits",
+    addProperty(limits,
+                limits_struct(),
+                "limits",
+                "limits",
                 "readwrite",
                 "",
                 "external",

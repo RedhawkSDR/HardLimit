@@ -89,15 +89,15 @@ class HardLimit_base(CF__POA.Resource, Component, ThreadedComponent):
         # 
         # DO NOT ADD NEW PROPERTIES HERE.  You can add properties in your derived class, in the PRF xml file
         # or by using the IDE.
-        class Limits(object):
+        class limits(object):
             upper_limit = simple_property(
-                                          id_="Limits::upper_limit",
+                                          id_="limits::upper_limit",
                                           name="upper_limit",
                                           type_="float",
                                           optional=True)
         
             lower_limit = simple_property(
-                                          id_="Limits::lower_limit",
+                                          id_="limits::lower_limit",
                                           name="lower_limit",
                                           type_="float",
                                           optional=True)
@@ -118,7 +118,7 @@ class HardLimit_base(CF__POA.Resource, Component, ThreadedComponent):
                 return str(d)
         
             def getId(self):
-                return "Limits"
+                return "limits"
         
             def isStruct(self):
                 return True
@@ -126,9 +126,9 @@ class HardLimit_base(CF__POA.Resource, Component, ThreadedComponent):
             def getMembers(self):
                 return [("upper_limit",self.upper_limit),("lower_limit",self.lower_limit)]
         
-        Limits = struct_property(id_="Limits",
-                                 name="Limits",
-                                 structdef=Limits,
+        limits = struct_property(id_="limits",
+                                 name="limits",
+                                 structdef=limits,
                                  configurationkind=("configure",),
                                  mode="readwrite")
         

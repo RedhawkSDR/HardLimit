@@ -18,11 +18,11 @@ program.  If not, see http://www.gnu.org/licenses/.
 -->
 <!DOCTYPE properties PUBLIC "-//JTRS//DTD SCA V2.2.2 PRF//EN" "properties.dtd">
 <properties>
-  <struct id="Limits" mode="readwrite" name="Limits">
-    <simple id="Limits::upper_limit" name="upper_limit" type="float" optional="true">
+  <struct id="limits" mode="readwrite" name="limits">
+    <simple id="limits::upper_limit" name="upper_limit" type="float" optional="true">
       <description>Sets the upper limit threshold.  If unset, then there is no upper threshold.</description>
     </simple>
-    <simple id="Limits::lower_limit" name="lower_limit" type="float" optional="true">
+    <simple id="limits::lower_limit" name="lower_limit" type="float" optional="true">
       <description>Sets the lower limit threshold.  If unset, then there is no lower threshold.</description>
     </simple>
     <configurationkind kindtype="configure"/>
