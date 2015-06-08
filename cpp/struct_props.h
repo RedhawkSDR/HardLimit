@@ -47,7 +47,7 @@ struct limits_struct {
 inline bool operator>>= (const CORBA::Any& a, limits_struct& s) {
     CF::Properties* temp;
     if (!(a >>= temp)) return false;
-    redhawk::PropertyMap props(*temp);
+    const redhawk::PropertyMap& props = redhawk::PropertyMap::cast(*temp);
     if (props.contains("limits::upper_limit")) {
         if (!(ossie::any::isNull(props["limits::upper_limit"]))) {
             float tmp;
@@ -67,7 +67,7 @@ inline bool operator>>= (const CORBA::Any& a, limits_struct& s) {
         }
     }
     return true;
-};
+}
 
 inline void operator<<= (CORBA::Any& a, const limits_struct& s) {
     redhawk::PropertyMap props;
@@ -78,7 +78,7 @@ inline void operator<<= (CORBA::Any& a, const limits_struct& s) {
         props["limits::lower_limit"] = *(s.lower_limit);
     }
     a <<= props;
-};
+}
 
 inline bool operator== (const limits_struct& s1, const limits_struct& s2) {
     if (s1.upper_limit!=s2.upper_limit)
@@ -86,10 +86,10 @@ inline bool operator== (const limits_struct& s1, const limits_struct& s2) {
     if (s1.lower_limit!=s2.lower_limit)
         return false;
     return true;
-};
+}
 
 inline bool operator!= (const limits_struct& s1, const limits_struct& s2) {
     return !(s1==s2);
-};
+}
 
 #endif // STRUCTPROPS_H

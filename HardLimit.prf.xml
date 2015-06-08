@@ -19,6 +19,7 @@ program.  If not, see http://www.gnu.org/licenses/.
 <!DOCTYPE properties PUBLIC "-//JTRS//DTD SCA V2.2.2 PRF//EN" "properties.dtd">
 <properties>
   <struct id="limits" mode="readwrite" name="limits">
+    <description>Sets the limit thresholds.</description>
     <simple id="limits::upper_limit" name="upper_limit" type="float" optional="true">
       <description>Sets the upper limit threshold.  If unset, then there is no upper threshold.</description>
     </simple>

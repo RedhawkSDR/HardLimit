@@ -31,7 +31,7 @@ if [ "$1" = "rpm" ]; then
         exit 1
     fi
 else
-    for impl in cpp python java ; do
+    for impl in cpp java python ; do
         cd $impl
         if [ -e build.sh ]; then
             ./build.sh $*

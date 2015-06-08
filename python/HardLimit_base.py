@@ -78,18 +78,22 @@ class HardLimit_base(CF__POA.Resource, Component, ThreadedComponent):
 
         port_dataFloat_in = providesport(name="dataFloat_in",
                                          repid="IDL:BULKIO/dataFloat:1.0",
-                                         type_="data")
+                                         type_="data",
+                                         description="""Float input port for data before hard limit is applied. """
+                                         )
 
         port_dataFloat_out = usesport(name="dataFloat_out",
                                       repid="IDL:BULKIO/dataFloat:1.0",
-                                      type_="data")
+                                      type_="data",
+                                      description="""Float output port for data after hard limit is applied. """
+                                      )
 
         ######################################################################
         # PROPERTIES
         # 
         # DO NOT ADD NEW PROPERTIES HERE.  You can add properties in your derived class, in the PRF xml file
         # or by using the IDE.
-        class limits(object):
+        class Limits(object):
             upper_limit = simple_property(
                                           id_="limits::upper_limit",
                                           name="upper_limit",
@@ -104,8 +108,8 @@ class HardLimit_base(CF__POA.Resource, Component, ThreadedComponent):
         
             def __init__(self, **kw):
                 """Construct an initialized instance of this struct definition"""
-                for attrname, classattr in type(self).__dict__.items():
-                    if type(classattr) == simple_property or type(classattr) == simpleseq_property:
+                for classattr in type(self).__dict__.itervalues():
+                    if isinstance(classattr, (simple_property, simpleseq_property)):
                         classattr.initialize(self)
                 for k,v in kw.items():
                     setattr(self,k,v)
@@ -117,10 +121,12 @@ class HardLimit_base(CF__POA.Resource, Component, ThreadedComponent):
                 d["lower_limit"] = self.lower_limit
                 return str(d)
         
-            def getId(self):
+            @classmethod
+            def getId(cls):
                 return "limits"
         
-            def isStruct(self):
+            @classmethod
+            def isStruct(cls):
                 return True
         
             def getMembers(self):
@@ -128,9 +134,10 @@ class HardLimit_base(CF__POA.Resource, Component, ThreadedComponent):
         
         limits = struct_property(id_="limits",
                                  name="limits",
-                                 structdef=limits,
+                                 structdef=Limits,
                                  configurationkind=("configure",),
-                                 mode="readwrite")
+                                 mode="readwrite",
+                                 description="""Sets the limit thresholds.""")
         
 
 

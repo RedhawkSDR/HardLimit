@@ -29,9 +29,11 @@ program.  If not, see http://www.gnu.org/licenses/.
     <supportsinterface repid="IDL:CF/TestableObject:1.0" supportsname="TestableObject"/>
     <ports>
       <provides repid="IDL:BULKIO/dataFloat:1.0" providesname="dataFloat_in">
+        <description>Float input port for data before hard limit is applied. </description>
         <porttype type="data"/>
       </provides>
       <uses repid="IDL:BULKIO/dataFloat:1.0" usesname="dataFloat_out">
+        <description>Float output port for data after hard limit is applied. </description>
         <porttype type="data"/>
       </uses>
     </ports>

@@ -51,7 +51,7 @@ public abstract class HardLimit_base extends Component {
 
     /**
      * The property limits
-     * If the meaning of this property isn't clear, a description should be added.
+     * Sets the limit thresholds.
      *
      * @generated
      */
@@ -116,12 +116,16 @@ public abstract class HardLimit_base extends Component {
     
     // Provides/inputs
     /**
+     * Float input port for data before hard limit is applied. 
+     *
      * @generated
      */
     public bulkio.InFloatPort port_dataFloat_in;
 
     // Uses/outputs
     /**
+     * Float output port for data after hard limit is applied. 
+     *
      * @generated
      */
     public bulkio.OutFloatPort port_dataFloat_out;
@@ -139,11 +143,11 @@ public abstract class HardLimit_base extends Component {
 
         // Provides/inputs
         this.port_dataFloat_in = new bulkio.InFloatPort("dataFloat_in");
-        this.addPort("dataFloat_in", this.port_dataFloat_in);
+        this.addPort("dataFloat_in", "Float input port for data before hard limit is applied. ", this.port_dataFloat_in); 
 
         // Uses/outputs
         this.port_dataFloat_out = new bulkio.OutFloatPort("dataFloat_out");
-        this.addPort("dataFloat_out", this.port_dataFloat_out);
+        this.addPort("dataFloat_out", "Float output port for data after hard limit is applied. ", this.port_dataFloat_out); 
     }
 
     public void start() throws CF.ResourcePackage.StartError

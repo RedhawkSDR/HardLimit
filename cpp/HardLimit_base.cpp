@@ -35,9 +35,9 @@ HardLimit_base::HardLimit_base(const char *uuid, const char *label) :
     loadProperties();
 
     dataFloat_in = new bulkio::InFloatPort("dataFloat_in");
-    addPort("dataFloat_in", dataFloat_in);
+    addPort("dataFloat_in", "Float input port for data before hard limit is applied. ", dataFloat_in);
     dataFloat_out = new bulkio::OutFloatPort("dataFloat_out");
-    addPort("dataFloat_out", dataFloat_out);
+    addPort("dataFloat_out", "Float output port for data after hard limit is applied. ", dataFloat_out);
 }
 
 HardLimit_base::~HardLimit_base()
