@@ -17,9 +17,9 @@
 #
 # vim: noet: softtabstop=0
 
-xmldir = $(prefix)/dom/components/HardLimit/
+xmldir = $(prefix)/dom/components/rh/HardLimit/
 dist_xml_DATA = ../HardLimit.scd.xml ../HardLimit.prf.xml ../HardLimit.spd.xml
-domdir = $(prefix)/dom/components/HardLimit/python/
+domdir = $(prefix)/dom/components/rh/HardLimit/python/
 
 distclean-local:
 	rm -f config.*

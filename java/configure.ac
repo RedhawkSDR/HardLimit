@@ -1,4 +1,4 @@
-AC_INIT(HardLimit, 2.0.0)
+AC_INIT(rh.HardLimit, 2.0.0)
 AM_INIT_AUTOMAKE(nostdinc)
 
 OSSIE_CHECK_OSSIE

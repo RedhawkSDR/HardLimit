@@ -40,13 +40,13 @@ distclean-local:
 	rm -f missing
 	rm -rf .deps
 
-ossieName = HardLimit
-bindir = $(prefix)/dom/components/HardLimit/java/
+ossieName = rh.HardLimit
+bindir = $(prefix)/dom/components/rh/HardLimit/java/
 bin_PROGRAMS = HardLimit.jar
 HardLimit_jar_SOURCES := $(shell find ./src -name "*.java")
 
-xmldir = $(prefix)/dom/components/HardLimit/
+xmldir = $(prefix)/dom/components/rh/HardLimit/
 dist_xml_DATA = ../HardLimit.scd.xml ../HardLimit.prf.xml ../HardLimit.spd.xml
 
-domdir = $(prefix)/dom/components/HardLimit/java/
+domdir = $(prefix)/dom/components/rh/HardLimit/java/
 dist_dom_SCRIPTS = startJava.sh

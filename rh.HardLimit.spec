@@ -27,7 +27,7 @@ Prefix:         %{_prefix}
 %define _mandir        %{_prefix}/man
 %define _infodir       %{_prefix}/info
 
-Name:           HardLimit
+Name:           rh.HardLimit
 Version:        2.0.0
 Release:        1%{?dist}
 Summary:        Component %{name}
@@ -46,8 +46,8 @@ BuildRequires:  bulkioInterfaces >= 2.0
 Requires:       bulkioInterfaces >= 2.0
 
 # Implementation java
-Requires: java >= 1.6
-BuildRequires: java-devel >= 1.6
+BuildRequires:  java-devel >= 1.6
+Requires:       java >= 1.6
 
 
 %description
@@ -64,21 +64,21 @@ Component %{name}
 # Implementation cpp
 pushd cpp
 ./reconf
-%define _bindir %{_prefix}/dom/components/HardLimit/cpp
+%define _bindir %{_prefix}/dom/components/rh/HardLimit/cpp
 %configure
 make %{?_smp_mflags}
 popd
 # Implementation python
 pushd python
 ./reconf
-%define _bindir %{_prefix}/dom/components/HardLimit/python
+%define _bindir %{_prefix}/dom/components/rh/HardLimit/python
 %configure
 make %{?_smp_mflags}
 popd
 # Implementation java
 pushd java
 ./reconf
-%define _bindir %{_prefix}/dom/components/HardLimit/java
+%define _bindir %{_prefix}/dom/components/rh/HardLimit/java
 %configure
 make %{?_smp_mflags}
 popd
@@ -88,17 +88,17 @@ popd
 rm -rf $RPM_BUILD_ROOT
 # Implementation cpp
 pushd cpp
-%define _bindir %{_prefix}/dom/components/HardLimit/cpp
+%define _bindir %{_prefix}/dom/components/rh/HardLimit/cpp
 make install DESTDIR=$RPM_BUILD_ROOT
 popd
 # Implementation python
 pushd python
-%define _bindir %{_prefix}/dom/components/HardLimit/python
+%define _bindir %{_prefix}/dom/components/rh/HardLimit/python
 make install DESTDIR=$RPM_BUILD_ROOT
 popd
 # Implementation java
 pushd java
-%define _bindir %{_prefix}/dom/components/HardLimit/java
+%define _bindir %{_prefix}/dom/components/rh/HardLimit/java
 make install DESTDIR=$RPM_BUILD_ROOT
 popd
 
@@ -109,11 +109,11 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,redhawk,redhawk,-)
-%dir %{_prefix}/dom/components/HardLimit
-%{_prefix}/dom/components/HardLimit/HardLimit.scd.xml
-%{_prefix}/dom/components/HardLimit/HardLimit.prf.xml
-%{_prefix}/dom/components/HardLimit/HardLimit.spd.xml
-%{_prefix}/dom/components/HardLimit/cpp
-%{_prefix}/dom/components/HardLimit/python
-%{_prefix}/dom/components/HardLimit/java
+%dir %{_prefix}/dom/components/rh/HardLimit
+%{_prefix}/dom/components/rh/HardLimit/HardLimit.scd.xml
+%{_prefix}/dom/components/rh/HardLimit/HardLimit.prf.xml
+%{_prefix}/dom/components/rh/HardLimit/HardLimit.spd.xml
+%{_prefix}/dom/components/rh/HardLimit/cpp
+%{_prefix}/dom/components/rh/HardLimit/python
+%{_prefix}/dom/components/rh/HardLimit/java
 

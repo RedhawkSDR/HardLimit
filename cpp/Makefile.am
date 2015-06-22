@@ -16,11 +16,11 @@
 # program.  If not, see http://www.gnu.org/licenses/.
 #
  
-ossieName = HardLimit
-bindir = $(prefix)/dom/components/HardLimit/cpp/
+ossieName = rh.HardLimit
+bindir = $(prefix)/dom/components/rh/HardLimit/cpp/
 bin_PROGRAMS = HardLimit
 
-xmldir = $(prefix)/dom/components/HardLimit/
+xmldir = $(prefix)/dom/components/rh/HardLimit/
 dist_xml_DATA = ../HardLimit.scd.xml ../HardLimit.prf.xml ../HardLimit.spd.xml
 ACLOCAL_AMFLAGS = -I$(OSSIEHOME)/share/aclocal/ossie
 
