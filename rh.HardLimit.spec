@@ -46,9 +46,8 @@ BuildRequires:  bulkioInterfaces >= 2.0
 Requires:       bulkioInterfaces >= 2.0
 
 # Implementation java
-BuildRequires:  java-devel >= 1.6
-Requires:       java >= 1.6
-
+Requires: java >= 1.6
+BuildRequires: java-devel >= 1.6
 
 %description
 Component %{name}

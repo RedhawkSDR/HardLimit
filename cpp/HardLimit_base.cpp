@@ -32,12 +32,14 @@ HardLimit_base::HardLimit_base(const char *uuid, const char *label) :
     Component(uuid, label),
     ThreadedComponent()
 {
+#ifdef BEGIN_AUTOCOMPLETE_IGNORE
     loadProperties();
 
     dataFloat_in = new bulkio::InFloatPort("dataFloat_in");
     addPort("dataFloat_in", "Float input port for data before hard limit is applied. ", dataFloat_in);
     dataFloat_out = new bulkio::OutFloatPort("dataFloat_out");
     addPort("dataFloat_out", "Float output port for data after hard limit is applied. ", dataFloat_out);
+#endif
 }
 
 HardLimit_base::~HardLimit_base()
@@ -48,6 +50,7 @@ HardLimit_base::~HardLimit_base()
     dataFloat_out = 0;
 }
 
+#ifdef BEGIN_AUTOCOMPLETE_IGNORE
 /*******************************************************************************************
     Framework-level functions
     These functions are generally called by the framework to perform housekeeping.
@@ -87,8 +90,9 @@ void HardLimit_base::loadProperties()
                 "readwrite",
                 "",
                 "external",
-                "configure");
+                "property");
 
 }
+#endif
 
 

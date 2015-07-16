@@ -32,6 +32,10 @@ class HardLimit_base : public Component, protected ThreadedComponent
         HardLimit_base(const char *uuid, const char *label);
         ~HardLimit_base();
 
+#ifdef BEGIN_AUTOCOMPLETE_IGNORE
+    /**
+     * \cond INTERNAL
+     */
         void start() throw (CF::Resource::StartError, CORBA::SystemException);
 
         void stop() throw (CF::Resource::StopError, CORBA::SystemException);
@@ -39,13 +43,20 @@ class HardLimit_base : public Component, protected ThreadedComponent
         void releaseObject() throw (CF::LifeCycle::ReleaseError, CORBA::SystemException);
 
         void loadProperties();
+    /**
+     * \endcond
+     */
+#endif
 
     protected:
         // Member variables exposed as properties
+        /// Property: limits
         limits_struct limits;
 
         // Ports
+        /// Port: dataFloat_in
         bulkio::InFloatPort *dataFloat_in;
+        /// Port: dataFloat_out
         bulkio::OutFloatPort *dataFloat_out;
 
     private:

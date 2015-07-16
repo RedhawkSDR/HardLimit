@@ -26,6 +26,6 @@ program.  If not, see http://www.gnu.org/licenses/.
     <simple id="limits::lower_limit" name="lower_limit" type="float" optional="true">
       <description>Sets the lower limit threshold.  If unset, then there is no lower threshold.</description>
     </simple>
-    <configurationkind kindtype="configure"/>
+    <configurationkind kindtype="property"/>
   </struct>
 </properties>

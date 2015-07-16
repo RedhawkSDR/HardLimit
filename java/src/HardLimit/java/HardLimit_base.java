@@ -111,7 +111,7 @@ public abstract class HardLimit_base extends Component {
             limits_struct.class, //type
             new limits_struct(), //default value
             Mode.READWRITE, //mode
-            new Kind[] {Kind.CONFIGURE} //kind
+            new Kind[] {Kind.PROPERTY} //kind
             );
     
     // Provides/inputs
@@ -136,6 +136,9 @@ public abstract class HardLimit_base extends Component {
     public HardLimit_base()
     {
         super();
+
+        setLogger( logger, HardLimit_base.class.getName() );
+
 
         // Properties
         addProperty(limits);

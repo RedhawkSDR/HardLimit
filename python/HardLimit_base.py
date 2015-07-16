@@ -135,7 +135,7 @@ class HardLimit_base(CF__POA.Resource, Component, ThreadedComponent):
         limits = struct_property(id_="limits",
                                  name="limits",
                                  structdef=Limits,
-                                 configurationkind=("configure",),
+                                 configurationkind=("property",),
                                  mode="readwrite",
                                  description="""Sets the limit thresholds.""")
         
