@@ -84,14 +84,12 @@ public class HardLimit extends HardLimit_base {
             }	
         	
         	for (int i =0; i<data.getData().length; i++) {
-        		if (this.limits.getValue().upper_limit.isSet() && data.getData()[i] > this.limits.getValue().upper_limit.getValue()) {
-        			data.getData()[i] = this.limits.getValue().upper_limit.getValue();
+        		if (data.getData()[i] > this.upper_limit.getValue()) {
+        			data.getData()[i] = this.upper_limit.getValue();
         		}
-        		
-        		if (this.limits.getValue().lower_limit.isSet() && data.getData()[i] < this.limits.getValue().lower_limit.getValue()) {
-        			data.getData()[i] = this.limits.getValue().lower_limit.getValue();
+        		else if (data.getData()[i] < this.lower_limit.getValue()) {
+        			data.getData()[i] = this.lower_limit.getValue();
         		}
-        		
         	}
         	this.port_dataFloat_out.pushPacket(data.getData(), data.getTime(), data.getEndOfStream(), data.getStreamID());
         return NORMAL;

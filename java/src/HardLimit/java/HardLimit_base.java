@@ -50,68 +50,35 @@ public abstract class HardLimit_base extends Component {
     public final static Logger logger = Logger.getLogger(HardLimit_base.class.getName());
 
     /**
-     * The property limits
-     * Sets the limit thresholds.
+     * The property upper_limit
+     * Sets the upper limit threshold
      *
      * @generated
      */
+    public final FloatProperty upper_limit =
+        new FloatProperty(
+            "upper_limit", //id
+            null, //name
+            1.0F, //default value
+            Mode.READWRITE, //mode
+            Action.EXTERNAL, //action
+            new Kind[] {Kind.PROPERTY}
+            );
+    
     /**
-     * The structure for property limits
-     * 
+     * The property lower_limit
+     * Sets the lower limit threshold
+     *
      * @generated
      */
-    public static class limits_struct extends StructDef {
-        public final FloatProperty upper_limit =
-            new FloatProperty(
-                "limits::upper_limit", //id
-                "upper_limit", //name
-                null, //default value
-                Mode.READWRITE, //mode
-                Action.EXTERNAL, //action
-                new Kind[] {Kind.CONFIGURE}, //kind
-                true
-                );
-        public final FloatProperty lower_limit =
-            new FloatProperty(
-                "limits::lower_limit", //id
-                "lower_limit", //name
-                null, //default value
-                Mode.READWRITE, //mode
-                Action.EXTERNAL, //action
-                new Kind[] {Kind.CONFIGURE}, //kind
-                true
-                );
-    
-        /**
-         * @generated
-         */
-        public limits_struct(Float upper_limit, Float lower_limit) {
-            this();
-            this.upper_limit.setValue(upper_limit);
-            this.lower_limit.setValue(lower_limit);
-        }
-    
-        /**
-         * @generated
-         */
-        public limits_struct() {
-            addElement(this.upper_limit);
-            addElement(this.lower_limit);
-        }
-    
-        public String getId() {
-            return "limits";
-        }
-    };
-    
-    public final StructProperty<limits_struct> limits =
-        new StructProperty<limits_struct>(
-            "limits", //id
-            "limits", //name
-            limits_struct.class, //type
-            new limits_struct(), //default value
+    public final FloatProperty lower_limit =
+        new FloatProperty(
+            "lower_limit", //id
+            null, //name
+            -1.0F, //default value
             Mode.READWRITE, //mode
-            new Kind[] {Kind.PROPERTY} //kind
+            Action.EXTERNAL, //action
+            new Kind[] {Kind.PROPERTY}
             );
     
     // Provides/inputs
@@ -141,7 +108,9 @@ public abstract class HardLimit_base extends Component {
 
 
         // Properties
-        addProperty(limits);
+        addProperty(upper_limit);
+
+        addProperty(lower_limit);
 
 
         // Provides/inputs

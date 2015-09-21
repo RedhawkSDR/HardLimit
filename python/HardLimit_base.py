@@ -27,8 +27,6 @@ from ossie.utils import uuid
 from ossie.component import Component
 from ossie.threadedcomponent import *
 from ossie.properties import simple_property
-from ossie.properties import simpleseq_property
-from ossie.properties import struct_property
 
 import Queue, copy, time, threading
 from ossie.resource import usesport, providesport
@@ -93,51 +91,21 @@ class HardLimit_base(CF__POA.Resource, Component, ThreadedComponent):
         # 
         # DO NOT ADD NEW PROPERTIES HERE.  You can add properties in your derived class, in the PRF xml file
         # or by using the IDE.
-        class Limits(object):
-            upper_limit = simple_property(
-                                          id_="limits::upper_limit",
-                                          name="upper_limit",
-                                          type_="float",
-                                          optional=True)
+        upper_limit = simple_property(id_="upper_limit",
+                                      type_="float",
+                                      defvalue=1.0,
+                                      mode="readwrite",
+                                      action="external",
+                                      kinds=("property",),
+                                      description="""Sets the upper limit threshold""")
         
-            lower_limit = simple_property(
-                                          id_="limits::lower_limit",
-                                          name="lower_limit",
-                                          type_="float",
-                                          optional=True)
-        
-            def __init__(self, **kw):
-                """Construct an initialized instance of this struct definition"""
-                for classattr in type(self).__dict__.itervalues():
-                    if isinstance(classattr, (simple_property, simpleseq_property)):
-                        classattr.initialize(self)
-                for k,v in kw.items():
-                    setattr(self,k,v)
-        
-            def __str__(self):
-                """Return a string representation of this structure"""
-                d = {}
-                d["upper_limit"] = self.upper_limit
-                d["lower_limit"] = self.lower_limit
-                return str(d)
-        
-            @classmethod
-            def getId(cls):
-                return "limits"
-        
-            @classmethod
-            def isStruct(cls):
-                return True
-        
-            def getMembers(self):
-                return [("upper_limit",self.upper_limit),("lower_limit",self.lower_limit)]
-        
-        limits = struct_property(id_="limits",
-                                 name="limits",
-                                 structdef=Limits,
-                                 configurationkind=("property",),
-                                 mode="readwrite",
-                                 description="""Sets the limit thresholds.""")
+        lower_limit = simple_property(id_="lower_limit",
+                                      type_="float",
+                                      defvalue=-1.0,
+                                      mode="readwrite",
+                                      action="external",
+                                      kinds=("property",),
+                                      description="""Sets the lower limit threshold""")
         
 
 

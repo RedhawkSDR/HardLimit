@@ -16,6 +16,9 @@
 # program.  If not, see http://www.gnu.org/licenses/.
 #
  
+ACLOCAL_AMFLAGS = -I m4 -I${OSSIEHOME}/share/aclocal/ossie
+AUTOMAKE_OPTIONS = subdir-objects
+
 HardLimit_jar_CLASSPATH = $(SOFTPKG_CLASSPATH):$(REDHAWK_CLASSPATH):$(OSSIE_HOME)/lib/bulkio.jar:$(OSSIE_HOME)/lib/BULKIOInterfaces.jar
 
 HardLimit.jar: $(HardLimit_jar_SOURCES)
@@ -28,6 +31,7 @@ clean-local:
 	rm -rf bin
 
 distclean-local:
+	rm -rf m4
 	rm -f config.*
 	rm -rf autom4te.cache
 	rm -f acinclude.m4

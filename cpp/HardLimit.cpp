@@ -54,13 +54,12 @@ int HardLimit_i::serviceFunction()
 
     // Implement the hard limit logic
     for (unsigned int i=0; i<tmp->dataBuffer.size(); i++) {
-        if (limits.upper_limit.isSet() && tmp->dataBuffer[i] > *(limits.upper_limit))
-        	tmp->dataBuffer[i] = *(limits.upper_limit);
+        if (tmp->dataBuffer[i] > upper_limit)
+        	tmp->dataBuffer[i] = upper_limit;
 
-        if (limits.lower_limit.isSet() && tmp->dataBuffer[i] < *(limits.lower_limit))
-        	tmp->dataBuffer[i] = *(limits.lower_limit);
-
-        }
+        else if (tmp->dataBuffer[i] < lower_limit)
+        	tmp->dataBuffer[i] = lower_limit;
+    }
 
      //Output sri equals the input sri for this component.  If anything is updated, then push that update out.
     if (tmp->sriChanged || (dataFloat_out->getCurrentSRI().count(tmp->streamID)==0)) {

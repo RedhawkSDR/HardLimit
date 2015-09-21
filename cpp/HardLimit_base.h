@@ -24,7 +24,6 @@
 #include <ossie/ThreadedComponent.h>
 
 #include <bulkio/bulkio.h>
-#include "struct_props.h"
 
 class HardLimit_base : public Component, protected ThreadedComponent
 {
@@ -32,10 +31,6 @@ class HardLimit_base : public Component, protected ThreadedComponent
         HardLimit_base(const char *uuid, const char *label);
         ~HardLimit_base();
 
-#ifdef BEGIN_AUTOCOMPLETE_IGNORE
-    /**
-     * \cond INTERNAL
-     */
         void start() throw (CF::Resource::StartError, CORBA::SystemException);
 
         void stop() throw (CF::Resource::StopError, CORBA::SystemException);
@@ -43,15 +38,13 @@ class HardLimit_base : public Component, protected ThreadedComponent
         void releaseObject() throw (CF::LifeCycle::ReleaseError, CORBA::SystemException);
 
         void loadProperties();
-    /**
-     * \endcond
-     */
-#endif
 
     protected:
         // Member variables exposed as properties
-        /// Property: limits
-        limits_struct limits;
+        /// Property: upper_limit
+        float upper_limit;
+        /// Property: lower_limit
+        float lower_limit;
 
         // Ports
         /// Port: dataFloat_in

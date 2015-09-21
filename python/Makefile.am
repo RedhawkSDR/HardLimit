@@ -16,12 +16,15 @@
 # program.  If not, see http://www.gnu.org/licenses/.
 #
 # vim: noet: softtabstop=0
+ACLOCAL_AMFLAGS = -I m4 -I${OSSIEHOME}/share/aclocal/ossie
+AUTOMAKE_OPTIONS = subdir-objects
 
 xmldir = $(prefix)/dom/components/rh/HardLimit/
 dist_xml_DATA = ../HardLimit.scd.xml ../HardLimit.prf.xml ../HardLimit.spd.xml
 domdir = $(prefix)/dom/components/rh/HardLimit/python/
 
 distclean-local:
+	rm -rf m4
 	rm -f config.*
 	rm -rf autom4te.cache
 	rm -f acinclude.m4

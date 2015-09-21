@@ -65,11 +65,11 @@ class HardLimit_i(HardLimit_base):
 
         # Implement the hard limit logic
         for i, val in enumerate(data):
-            if self.limits.upper_limit != None and val > self.limits.upper_limit:
-                data[i] = self.limits.upper_limit
+            if val > self.upper_limit:
+                data[i] = self.upper_limit
             
-            if self.limits.lower_limit != None and val < self.limits.lower_limit:
-                data[i] = self.limits.lower_limit
+            elif val < self.lower_limit:
+                data[i] = self.lower_limit
         
         # Push the modified data out along with the T, EOS, and streamID we received in the input        
         self.port_dataFloat_out.pushPacket(data, T, EOS, streamID)
