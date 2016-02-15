@@ -5,7 +5,7 @@
 Contains the source and build script for the REDHAWK Basic Components rh.HardLimit. This component thresholds data so that all data is between the upper and lower limit as specified by the properties.
  
 ## Installation Instructions
-To build from source, run the `build.sh` script found at the top level directory. To install to $SDRROOT run, `build.sh install`
+To build from source, run the `build.sh` script found at the top level directory. To install to $SDRROOT, run `build.sh install`
 
 ## Copyrights
 
