@@ -29,7 +29,7 @@ Prefix:         %{_prefix}
 
 Name:           rh.HardLimit
 Version:        2.0.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Component %{name}
 
 Group:          REDHAWK/Components
@@ -119,4 +119,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/dom/components/rh/HardLimit/cpp
 %{_prefix}/dom/components/rh/HardLimit/python
 %{_prefix}/dom/components/rh/HardLimit/java
+
+%changelog
+* Wed Jun 21 2017 Ryan Bauman <rbauman@lgsinnovations.com> - 2.0.0-2
+- Mass rebuild for REDHAWK 2.1.1
 
